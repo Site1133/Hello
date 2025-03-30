@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" href="styles/style.css"/>
+  <title>Conect|Dev</title>
+</head>
+<body>
+  <h1>
+    
+  </h1>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dev Conect - Plataforma Global para Programadores</title>
+  <!-- Font Awesome e Google Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* Paleta de cores: branco e roxo */
+    :root {
+      --primary-color: #6200ee;
+      --secondary-color: #03dac6;
+      --background-color: #ffffff;
+      --text-color: #333;
+      --error-color: #b00020;
+      --success-color: #00c853;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+    body {
+      background-color: var(--background-color);
+      color: var(--text-color);
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+      border-bottom: 1px solid #ddd;
+      margin-bottom: 20px;
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 15px;
+    }
+    nav ul li a {
+      text-decoration: none;
+      color: var(--text-color);
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    nav ul li a:hover {
+      color: var(--primary-color);
+    }
+    .hidden { display: none; }
+    /* Seções (SPA) */
+    .section { display: none; }
+    .section.active { display: block; }
+    /* Autenticação – formulário centralizado */
+    .auth-container {
+      max-width: 400px;
+      margin: 20px auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .auth-tabs {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #ddd;
+    }
+    .auth-tab {
+      flex: 1;
+      text-align: center;
+      padding: 10px;
+      cursor: pointer;
+      font-weight: 500;
+      color: var(--text-color);
+    }
+    .auth-tab.active {
+      color: var(--primary-color);
+      border-bottom: 2px solid var(--primary-color);
+    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      margin-bottom: 5px;
+      display: block;
+      font-weight: 500;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    .btn {
+      width: 100%;
+      padding: 10px;
+      background-color: var(--primary-color);
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .btn:hover {
+      background-color: #5000e0;
+    }
+    .divider {
+      text-align: center;
+      margin: 20px 0;
+      position: relative;
+    }
+    .divider::before,
+    .divider::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 40%;
+      height: 1px;
+      background: #ddd;
+    }
+    .divider::before { left: 0; }
+    .divider::after { right: 0; }
+    .divider span { padding: 0 10px; color: #777; }
+    .error-message { color: var(--error-color); font-size: 14px; margin-top: 5px; }
+    .success-message { color: var(--success-color); font-size: 14px; margin-top: 5px; }
+    /* Perfil – responsivo */
+    .profile-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .profile-pic {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--primary-color);
+      margin-bottom: 10px;
+    }
+    .upload-btn {
+      background: transparent;
+      border: none;
+      color: var(--primary-color);
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .profile-details { margin-top: 10px; }
+    .profile-details textarea {
+      resize: vertical;
+    }
+    .follow-btn {
+      padding: 8px 15px;
+      background-color: var(--primary-color);
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    /* Verificação e Denúncia */
+    #verification-section {
+      margin-top: 20px;
+      border-top: 1px solid #ddd;
+      padding-top: 15px;
+    }
+    /* Feed de Posts */
+    .feed-container {
+      margin: 0 auto;
+    }
+    .new-post, .post {
+      max-width: 600px;
+      margin: 0 auto 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    .post-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .post-header img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    .verified { color: blue; margin-left: 5px; }
+    .post-content p { margin-bottom: 10px; }
+    .post-content video,
+    .post-content img {
+      max-width: 100%;
+      border-radius: 8px;
+    }
+    .post-actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      margin-top: 10px;
+    }
+    .post-actions span {
+      font-size: 14px;
+      color: var(--primary-color);
+      cursor: pointer;
+    }
+    .reaction-panel, .comments-panel {
+      margin-top: 10px;
+      display: none;
+    }
+    .reaction-panel span {
+      font-size: 20px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+    .comments-panel .comment {
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    .comment-input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    .progress-bar {
+      width: 0;
+      height: 5px;
+      background: var(--primary-color);
+      border-radius: 4px;
+      margin-top: 5px;
+      transition: width 0.3s ease;
+    }
+    /* Chat */
+    .chat-container {
+      display: flex;
+      height: 70vh;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .chat-sidebar {
+      width: 300px;
+      border-right: 1px solid #ddd;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    .chat-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .chat-header {
+      padding: 20px;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+    }
+    .typing-indicator {
+      font-size: 14px;
+      color: var(--primary-color);
+      margin-left: 10px;
+    }
+    .chat-content {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    .chat-footer {
+      padding: 20px;
+      border-top: 1px solid #ddd;
+    }
+    .message {
+      margin-bottom: 15px;
+      display: flex;
+    }
+    .message.sent { justify-content: flex-end; }
+    .message.received { justify-content: flex-start; }
+    .message-content {
+      max-width: 70%;
+      padding: 10px;
+      border-radius: 8px;
+    }
+    .message.sent .message-content { background: var(--primary-color); color: #fff; }
+    .message.received .message-content { background: #f0f0f0; }
+    /* Perfil (Página do Usuário) */
+    .profile-page {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .profile-page .profile-container { margin-bottom: 20px; }
+    .profile-page h2 { margin-bottom: 15px; }
+    .profile-posts .post { margin-bottom: 15px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Cabeçalho e Navegação -->
+    <header>
+      <div class="logo"><i class="fas fa-code"></i> Dev Conect</div>
+      <nav>
+        <ul>
+          <li><a href="#" id="nav-feed-link">Feed</a></li>
+          <li><a href="#" id="nav-chat-link" class="hidden">Chat</a></li>
+          <li><a href="#" id="nav-profile-link" class="hidden">Perfil</a></li>
+          <li><a href="#" id="nav-logout" class="hidden">Sair</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Seção de Autenticação -->
+    <section id="auth-section" class="section active">
+      <div class="auth-container">
+        <div class="auth-tabs">
+          <div class="auth-tab active" data-tab="login">Login</div>
+          <div class="auth-tab" data-tab="register">Cadastro</div>
+          <div class="auth-tab" data-tab="reset">Redefinir Senha</div>
+        </div>
+        <!-- Login -->
+        <div class="tab-content active" id="login-tab">
+          <form id="login-form">
+            <div class="form-group">
+              <label for="login-email">E-mail</label>
+              <input type="email" id="login-email" required>
+            </div>
+            <div class="form-group">
+              <label for="login-password">Senha</label>
+              <input type="password" id="login-password" required>
+            </div>
+            <button type="submit" class="btn">Entrar</button>
+            <div class="error-message" id="login-error"></div>
+          </form>
+          <div class="divider"><span>ou</span></div>
+          <button class="social-btn" id="google-login"><i class="fab fa-google"></i> Entrar com Google</button>
+        </div>
+        <!-- Cadastro -->
+        <div class="tab-content" id="register-tab">
+          <div class="profile-container">
+            <img src="https://via.placeholder.com/150" alt="Foto de Perfil" id="profile-preview" class="profile-pic">
+            <br>
+            <button type="button" class="upload-btn" id="upload-photo">Escolher foto</button>
+            <input type="file" id="photo-input" accept="image/*" style="display: none;">
+          </div>
+          <form id="register-form">
+            <div class="form-group">
+              <label for="register-name">Nome Completo</label>
+              <input type="text" id="register-name" required>
+            </div>
+            <div class="form-group">
+              <label for="register-email">E-mail</label>
+              <input type="email" id="register-email" required>
+            </div>
+            <div class="form-group">
+              <label for="register-phone">Telefone</label>
+              <input type="tel" id="register-phone" required>
+            </div>
+            <div class="form-group">
+              <label for="register-password">Senha</label>
+              <input type="password" id="register-password" required>
+            </div>
+            <div class="form-group">
+              <label for="register-confirm-password">Confirmar Senha</label>
+              <input type="password" id="register-confirm-password" required>
+            </div>
+            <button type="submit" class="btn">Cadastrar</button>
+            <div class="error-message" id="register-error"></div>
+            <div class="success-message" id="register-success"></div>
+          </form>
+        </div>
+        <!-- Redefinir Senha -->
+        <div class="tab-content" id="reset-tab">
+          <form id="reset-form">
+            <div class="form-group">
+              <label for="reset-email">E-mail</label>
+              <input type="email" id="reset-email" required>
+            </div>
+            <button type="submit" class="btn">Redefinir Senha</button>
+            <div class="error-message" id="reset-error"></div>
+            <div class="success-message" id="reset-success"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção do Feed -->
+    <section id="feed-section" class="section">
+      <div class="feed-container">
+        <h2>Feed de Posts</h2>
+        <div class="new-post">
+          <form id="new-post-form">
+            <div class="form-group">
+              <label for="post-text">O que você está pensando?</label>
+              <textarea id="post-text" rows="3" placeholder="Digite seu post..." required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="post-video">Enviar vídeo (opcional)</label>
+              <input type="file" id="post-video" accept="video/*">
+            </div>
+            <div class="form-group">
+              <label for="video-quality">Qualidade do vídeo</label>
+              <select id="video-quality">
+                <option value="750p">750p</option>
+                <option value="1080p">1080p</option>
+              </select>
+            </div>
+            <div class="progress-bar" id="upload-progress"></div>
+            <button type="submit" class="btn">Postar</button>
+            <div class="error-message" id="post-error"></div>
+            <div class="success-message" id="post-success"></div>
+          </form>
+        </div>
+        <div id="posts-list">
+          <!-- Posts serão carregados dinamicamente -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção do Chat -->
+    <section id="chat-section" class="section">
+      <div class="chat-container">
+        <div class="chat-sidebar">
+          <div class="user-profile">
+            <img src="https://via.placeholder.com/150" alt="Seu Avatar" id="user-avatar" class="user-avatar">
+            <div class="user-info">
+              <div class="user-name" id="chat-user-name">Nome do Usuário</div>
+              <div class="user-status" id="chat-user-status">Offline</div>
+            </div>
+          </div>
+          <ul class="chat-list" id="chat-list">
+            <li>Conferência Geral</li>
+          </ul>
+        </div>
+        <div class="chat-main">
+          <div class="chat-header">
+            <img src="https://via.placeholder.com/150" alt="Avatar do Chat" id="chat-avatar" class="chat-avatar">
+            <div class="chat-info">
+              <div class="chat-name" id="chat-name">Conferência Geral</div>
+              <div class="typing-indicator" id="typing-indicator"></div>
+            </div>
+          </div>
+          <div class="chat-content" id="chat-content">
+            <!-- Mensagens em tempo real -->
+          </div>
+          <div class="chat-footer">
+            <form id="message-form" class="message-form">
+              <input type="text" class="message-input" id="message-input" placeholder="Digite sua mensagem..." required>
+              <button type="submit" class="btn"><i class="fas fa-paper-plane"></i></button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção do Perfil -->
+    <section id="profile-section" class="section">
+      <div class="profile-page">
+        <h2>Meu Perfil</h2>
+        <div class="profile-container">
+          <img src="https://via.placeholder.com/150" alt="Foto do Perfil" id="profile-page-pic" class="profile-pic">
+          <h3 id="profile-page-name"></h3>
+          <p id="profile-page-email"></p>
+          <div class="profile-details">
+            <textarea id="profile-description" rows="3" placeholder="Digite sua descrição..."></textarea>
+            <button id="update-profile-btn" class="btn">Atualizar Perfil</button>
+          </div>
+          <div id="follow-section">
+            <button id="follow-btn" class="follow-btn">Seguir</button>
+            <p><strong id="followers-count">0</strong> Seguidores</p>
+          </div>
+        </div>
+        <h3>Meus Posts</h3>
+        <div class="profile-posts" id="profile-posts">
+          <!-- Posts do usuário serão carregados -->
+        </div>
+        <!-- Módulo de Verificação e Denúncia -->
+        <div id="verification-section">
+          <h3>Solicitar Verificação</h3>
+          <form id="verification-form">
+            <div class="form-group">
+              <label for="whatsapp-number">Número do WhatsApp</label>
+              <input type="text" id="whatsapp-number" required>
+            </div>
+            <div class="form-group">
+              <label for="document-upload">Enviar Documento (Carta de Condução, RG, etc.)</label>
+              <input type="file" id="document-upload" accept="image/*,application/pdf" required>
+            </div>
+            <button type="submit" class="btn">Solicitar Verificação</button>
+            <div class="error-message" id="verification-error"></div>
+            <div class="success-message" id="verification-success"></div>
+          </form>
+          <button id="report-account-btn" class="btn" style="background-color: var(--error-color); margin-top:10px;">Denunciar Conta Falsa</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+
+  <!-- Script de Integração -->
+  <script>
+    // Configuração do Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyCFaWTH92nVdeijiDW1H6BZlo2d8Q--Ycw",
+      authDomain: "site-f9dfe.firebaseapp.com",
+      projectId: "site-f9dfe",
+      storageBucket: "site-f9dfe.firebasestorage.app",
+      messagingSenderId: "575993929458",
+      appId: "1:575993929458:web:22a4da5cef1ba62d35ba6b"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const firestore = firebase.firestore();
+    const storage = firebase.storage();
+    auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+
+    // Elementos DOM
+    const authSection = document.getElementById('auth-section');
+    const feedSection = document.getElementById('feed-section');
+    const chatSection = document.getElementById('chat-section');
+    const profileSection = document.getElementById('profile-section');
+    const navFeedLink = document.getElementById('nav-feed-link');
+    const navChatLink = document.getElementById('nav-chat-link');
+    const navProfileLink = document.getElementById('nav-profile-link');
+    const navLogout = document.getElementById('nav-logout');
+    const authTabs = document.querySelectorAll('.auth-tab');
+    const tabContents = document.querySelectorAll('.tab-content');
+    const loginForm = document.getElementById('login-form');
+    const registerForm = document.getElementById('register-form');
+    const resetForm = document.getElementById('reset-form');
+    const googleLoginBtn = document.getElementById('google-login');
+    const uploadPhotoBtn = document.getElementById('upload-photo');
+    const photoInput = document.getElementById('photo-input');
+    const profilePreview = document.getElementById('profile-preview');
+    const messageForm = document.getElementById('message-form');
+    const messageInput = document.getElementById('message-input');
+    const chatContentDiv = document.getElementById('chat-content');
+    const typingIndicator = document.getElementById('typing-indicator');
+    const newPostForm = document.getElementById('new-post-form');
+    const postVideoInput = document.getElementById('post-video');
+    const videoQualitySelect = document.getElementById('video-quality');
+    const uploadProgress = document.getElementById('upload-progress');
+    const postsList = document.getElementById('posts-list');
+    const profilePagePic = document.getElementById('profile-page-pic');
+    const profilePageName = document.getElementById('profile-page-name');
+    const profilePageEmail = document.getElementById('profile-page-email');
+    const profilePosts = document.getElementById('profile-posts');
+    const chatUserName = document.getElementById('chat-user-name');
+    const chatUserStatus = document.getElementById('chat-user-status');
+    const profileDescription = document.getElementById('profile-description');
+    const updateProfileBtn = document.getElementById('update-profile-btn');
+    const followBtn = document.getElementById('follow-btn');
+    const followersCountElem = document.getElementById('followers-count');
+    // Elementos de verificação/denúncia
+    const verificationForm = document.getElementById('verification-form');
+    const whatsappNumberInput = document.getElementById('whatsapp-number');
+    const documentUploadInput = document.getElementById('document-upload');
+    const verificationError = document.getElementById('verification-error');
+    const verificationSuccess = document.getElementById('verification-success');
+    const reportAccountBtn = document.getElementById('report-account-btn');
+
+    // Função para exibir a seção desejada
+    function showSection(section) {
+      [authSection, feedSection, chatSection, profileSection].forEach(sec => sec.classList.remove('active'));
+      section.classList.add('active');
+    }
+
+    // Eventos de navegação
+    navFeedLink.addEventListener('click', e => { e.preventDefault(); showSection(feedSection); });
+    navChatLink.addEventListener('click', e => { e.preventDefault(); showSection(chatSection); });
+    navProfileLink.addEventListener('click', e => { e.preventDefault(); showSection(profileSection); loadProfilePosts(); loadProfileData(); });
+
+    // Alternar abas de autenticação
+    authTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        authTabs.forEach(t => t.classList.remove('active'));
+        tabContents.forEach(c => c.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(tab.getAttribute('data-tab') + '-tab').classList.add('active');
+      });
+    });
+
+    // Upload de foto de perfil
+    uploadPhotoBtn.addEventListener('click', () => { photoInput.click(); });
+    photoInput.addEventListener('change', e => {
+      const file = e.target.files[0];
+      if(file){
+        const reader = new FileReader();
+        reader.onload = e => { profilePreview.src = e.target.result; };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Cadastro de usuário
+    registerForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const name = document.getElementById('register-name').value;
+      const email = document.getElementById('register-email').value;
+      const phone = document.getElementById('register-phone').value;
+      const password = document.getElementById('register-password').value;
+      const confirmPassword = document.getElementById('register-confirm-password').value;
+      const registerError = document.getElementById('register-error');
+      const registerSuccess = document.getElementById('register-success');
+      if(password !== confirmPassword) { registerError.textContent = "As senhas não conferem."; return; }
+      auth.createUserWithEmailAndPassword(email, password)
+        .then(userCredential => {
+          const user = userCredential.user;
+          return user.updateProfile({
+            displayName: name,
+            photoURL: profilePreview.src
+          }).then(() => {
+            return firestore.collection('users').doc(user.uid).set({
+              name, email, phone,
+              photoURL: profilePreview.src,
+              description: "",
+              followers: [],
+              followersCount: 0,
+              verified: false,
+              deactivated: false,
+              lastActive: firebase.firestore.FieldValue.serverTimestamp(),
+              createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+          });
+        })
+        .then(() => {
+          registerSuccess.textContent = "Cadastro realizado com sucesso!";
+          registerForm.reset();
+          profilePreview.src = "https://via.placeholder.com/150";
+        })
+        .catch(error => { registerError.textContent = error.message; });
+    });
+
+    // Login de usuário
+    loginForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+      const loginError = document.getElementById('login-error');
+      auth.signInWithEmailAndPassword(email, password)
+        .then(() => { loginForm.reset(); })
+        .catch(error => { loginError.textContent = error.message; });
+    });
+
+    // Login com Google
+    googleLoginBtn.addEventListener('click', () => {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      auth.signInWithPopup(provider)
+        .then(result => {
+          const user = result.user;
+          firestore.collection('users').doc(user.uid).get().then(doc => {
+            if(!doc.exists){
+              return firestore.collection('users').doc(user.uid).set({
+                name: user.displayName,
+                email: user.email,
+                photoURL: user.photoURL,
+                description: "",
+                followers: [],
+                followersCount: 0,
+                verified: false,
+                deactivated: false,
+                lastActive: firebase.firestore.FieldValue.serverTimestamp(),
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+              });
+            }
+          });
+        })
+        .catch(error => { console.error(error); });
+    });
+
+    // Redefinição de senha
+    resetForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const email = document.getElementById('reset-email').value;
+      const resetError = document.getElementById('reset-error');
+      const resetSuccess = document.getElementById('reset-success');
+      auth.sendPasswordResetEmail(email)
+        .then(() => { resetSuccess.textContent = "Verifique seu e-mail para redefinir a senha."; resetForm.reset(); })
+        .catch(error => { resetError.textContent = error.message; });
+    });
+
+    // Atualiza status online (simula presença)
+    function updateOnlineStatus(uid) {
+      firestore.collection('users').doc(uid).update({
+        lastActive: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    }
+    setInterval(() => { if(auth.currentUser){ updateOnlineStatus(auth.currentUser.uid); } }, 30000);
+
+    // Monitorar autenticação
+    auth.onAuthStateChanged(user => {
+      if(user){
+        showSection(feedSection);
+        navFeedLink.classList.remove('hidden');
+        navChatLink.classList.remove('hidden');
+        navProfileLink.classList.remove('hidden');
+        navLogout.classList.remove('hidden');
+        // Atualiza dados para chat e perfil
+        document.getElementById('user-name').textContent = user.displayName || user.email;
+        document.getElementById('user-avatar').src = user.photoURL || 'https://via.placeholder.com/150';
+        chatUserName.textContent = user.displayName || user.email;
+        profilePagePic.src = user.photoURL || 'https://via.placeholder.com/150';
+        profilePageName.textContent = user.displayName || "Sem Nome";
+        profilePageEmail.textContent = user.email;
+        loadFollowers(user.uid);
+      } else {
+        showSection(authSection);
+        navFeedLink.classList.add('hidden');
+        navChatLink.classList.add('hidden');
+        navProfileLink.classList.add('hidden');
+        navLogout.classList.add('hidden');
+      }
+    });
+
+    // Logout
+    navLogout.addEventListener('click', e => {
+      e.preventDefault();
+      auth.signOut().then(() => { console.log("Usuário desconectado"); });
+    });
+
+    // Chat: Envio de mensagem
+    messageForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const messageText = messageInput.value.trim();
+      if(messageText==='') return;
+      firestore.collection('messages').add({
+        text: messageText,
+        sender: auth.currentUser.uid,
+        senderName: auth.currentUser.displayName || auth.currentUser.email,
+        senderPhoto: auth.currentUser.photoURL || 'https://via.placeholder.com/150',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      }).then(() => { messageForm.reset(); })
+      .catch(error => { console.error("Erro ao enviar mensagem:", error); });
+    });
+
+    // Chat: Exibir mensagens em tempo real
+    firestore.collection('messages').orderBy('createdAt').onSnapshot(snapshot => {
+      chatContentDiv.innerHTML = "";
+      snapshot.forEach(doc => {
+        const message = doc.data();
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('message', message.sender === auth.currentUser.uid ? 'sent' : 'received');
+        const contentDiv = document.createElement('div');
+        contentDiv.classList.add('message-content');
+        contentDiv.textContent = message.text;
+        messageDiv.appendChild(contentDiv);
+        chatContentDiv.appendChild(messageDiv);
+      });
+      chatContentDiv.scrollTop = chatContentDiv.scrollHeight;
+    });
+
+    // Chat: Indicador de "digitando..."
+    let typingTimeout;
+    messageInput.addEventListener('keydown', () => {
+      firestore.collection('typingStatus').doc(auth.currentUser.uid).set({
+        name: auth.currentUser.displayName || auth.currentUser.email,
+        typing: true,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      clearTimeout(typingTimeout);
+      typingTimeout = setTimeout(() => {
+        firestore.collection('typingStatus').doc(auth.currentUser.uid).update({ typing: false });
+      }, 2000);
+    });
+    firestore.collection('typingStatus').onSnapshot(snapshot => {
+      let typingUsers = [];
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        if(data.typing && doc.id !== auth.currentUser.uid){ typingUsers.push(data.name); }
+      });
+      typingIndicator.textContent = typingUsers.length ? typingUsers.join(', ') + " digitando..." : "";
+    });
+
+    // Feed: Novo post
+    newPostForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const text = document.getElementById('post-text').value;
+      const quality = videoQualitySelect.value;
+      const postError = document.getElementById('post-error');
+      const postSuccess = document.getElementById('post-success');
+      if(postVideoInput.files.length > 0){
+        const file = postVideoInput.files[0];
+        const storageRef = storage.ref('posts/' + auth.currentUser.uid + '/' + file.name);
+        const uploadTask = storageRef.put(file);
+        uploadTask.on('state_changed', snapshot => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          uploadProgress.style.width = progress + '%';
+        }, error => {
+          postError.textContent = error.message;
+        }, () => {
+          uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
+            firestore.collection('posts').add({
+              text, videoURL: downloadURL, videoQuality: quality,
+              author: auth.currentUser.uid,
+              authorName: auth.currentUser.displayName || auth.currentUser.email,
+              authorPhoto: auth.currentUser.photoURL || 'https://via.placeholder.com/150',
+              createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+              reactions: {},
+              comments: []
+            }).then(() => {
+              postSuccess.textContent = "Post realizado com sucesso!";
+              newPostForm.reset();
+              uploadProgress.style.width = '0';
+            }).catch(error => { postError.textContent = error.message; });
+          });
+        });
+      } else {
+        firestore.collection('posts').add({
+          text,
+          author: auth.currentUser.uid,
+          authorName: auth.currentUser.displayName || auth.currentUser.email,
+          authorPhoto: auth.currentUser.photoURL || 'https://via.placeholder.com/150',
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          reactions: {},
+          comments: []
+        }).then(() => {
+          postSuccess.textContent = "Post realizado com sucesso!";
+          newPostForm.reset();
+        }).catch(error => { postError.textContent = error.message; });
+      }
+    });
+
+    // Feed: Exibir posts em tempo real
+    firestore.collection('posts').orderBy('createdAt', 'desc').onSnapshot(snapshot => {
+      postsList.innerHTML = "";
+      snapshot.forEach(doc => {
+        const post = doc.data();
+        const postDiv = document.createElement('div');
+        postDiv.classList.add('post');
+        // Cabeçalho do post
+        const postHeader = document.createElement('div');
+        postHeader.classList.add('post-header');
+        const authorImg = document.createElement('img');
+        authorImg.src = post.authorPhoto || 'https://via.placeholder.com/150';
+        const authorName = document.createElement('strong');
+        authorName.textContent = post.authorName;
+        postHeader.appendChild(authorImg);
+        postHeader.appendChild(authorName);
+        // Verificação: exibe ícone se usuário estiver verificado
+        firestore.collection('users').doc(post.author).get().then(userDoc => {
+          const userData = userDoc.data();
+          if(userData && userData.verified === true){
+            const verifiedIcon = document.createElement('i');
+            verifiedIcon.classList.add('fas', 'fa-check-circle', 'verified');
+            postHeader.appendChild(verifiedIcon);
+          }
+        });
+        // Conteúdo do post
+        const postContent = document.createElement('div');
+        postContent.classList.add('post-content');
+        const postText = document.createElement('p');
+        postText.textContent = post.text;
+        postContent.appendChild(postText);
+        if(post.videoURL){
+          const videoElem = document.createElement('video');
+          videoElem.src = post.videoURL;
+          videoElem.controls = true;
+          videoElem.style.maxHeight = "400px";
+          postContent.appendChild(videoElem);
+          const qualityLabel = document.createElement('small');
+          qualityLabel.textContent = "Qualidade: " + post.videoQuality;
+          postContent.appendChild(qualityLabel);
+        }
+        // Ações: Reações e Comentários
+        const postActions = document.createElement('div');
+        postActions.classList.add('post-actions');
+        const commentsBtn = document.createElement('span');
+        commentsBtn.innerHTML = '<i class="far fa-comment"></i> Comentários (' + (post.comments ? post.comments.length : 0) + ')';
+        commentsBtn.addEventListener('click', () => toggleCommentsPanel(doc.id));
+        const reactionsBtn = document.createElement('span');
+        reactionsBtn.innerHTML = '<i class="far fa-heart"></i> Reações';
+        reactionsBtn.addEventListener('click', () => toggleReactionPanel(doc.id));
+        postActions.appendChild(commentsBtn);
+        postActions.appendChild(reactionsBtn);
+        // Painel de reações
+        const reactionPanel = document.createElement('div');
+        reactionPanel.classList.add('reaction-panel');
+        ['👍','❤️','😂','😮','😢'].forEach(emoji => {
+          const span = document.createElement('span');
+          span.textContent = emoji;
+          span.addEventListener('click', () => addReaction(doc.id, emoji));
+          reactionPanel.appendChild(span);
+        });
+        // Painel de comentários
+        const commentsPanel = document.createElement('div');
+        commentsPanel.classList.add('comments-panel');
+        const commentsList = document.createElement('div');
+        commentsList.id = "comments-" + doc.id;
+        const commentInput = document.createElement('input');
+        commentInput.classList.add('comment-input');
+        commentInput.placeholder = "Adicionar comentário...";
+        commentInput.addEventListener('keydown', e => {
+          if(e.key === 'Enter' && commentInput.value.trim() !== ""){
+            addComment(doc.id, commentInput.value.trim());
+            commentInput.value = "";
+          }
+        });
+        commentsPanel.appendChild(commentsList);
+        commentsPanel.appendChild(commentInput);
+        // Monta o post
+        postDiv.appendChild(postHeader);
+        postDiv.appendChild(postContent);
+        postDiv.appendChild(postActions);
+        postDiv.appendChild(reactionPanel);
+        postDiv.appendChild(commentsPanel);
+        postsList.appendChild(postDiv);
+      });
+    });
+
+    // Função para alternar painel de reações
+    function toggleReactionPanel(postId){
+      const panel = document.querySelector(`#comments-${postId}`).parentNode.previousElementSibling;
+      panel.style.display = panel.style.display === "block" ? "none" : "block";
+    }
+
+    // Função para adicionar reação
+    function addReaction(postId, emoji){
+      const postRef = firestore.collection('posts').doc(postId);
+      firestore.runTransaction(transaction => {
+        return transaction.get(postRef).then(doc => {
+          if(!doc.exists) throw "Documento não existe!";
+          let reactions = doc.data().reactions || {};
+          reactions[emoji] = (reactions[emoji] || 0) + 1;
+          transaction.update(postRef, { reactions });
+        });
+      }).catch(error => { console.error("Erro ao adicionar reação:", error); });
+    }
+
+    // Função para alternar painel de comentários
+    function toggleCommentsPanel(postId){
+      const commentsPanel = document.querySelector("#comments-" + postId).parentNode;
+      commentsPanel.style.display = commentsPanel.style.display === "block" ? "none" : "block";
+      if(commentsPanel.style.display === "block") loadComments(postId);
+    }
+
+    // Função para adicionar comentário
+    function addComment(postId, commentText){
+      firestore.collection('posts').doc(postId).update({
+        comments: firebase.firestore.FieldValue.arrayUnion({
+          commenter: auth.currentUser.uid,
+          commenterName: auth.currentUser.displayName || auth.currentUser.email,
+          text: commentText,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        })
+      });
+    }
+
+    // Função para carregar comentários
+    function loadComments(postId){
+      const postRef = firestore.collection('posts').doc(postId);
+      postRef.onSnapshot(doc => {
+        const data = doc.data();
+        const commentsDiv = document.getElementById("comments-" + postId);
+        commentsDiv.innerHTML = "";
+        if(data.comments){
+          data.comments.sort((a, b) => a.createdAt.seconds - b.createdAt.seconds);
+          data.comments.forEach(comment => {
+            const commentDiv = document.createElement('div');
+            commentDiv.classList.add('comment');
+            commentDiv.innerHTML = `<strong>${comment.commenterName}:</strong> ${comment.text}`;
+            commentsDiv.appendChild(commentDiv);
+          });
+        }
+      });
+    }
+
+    // Carrega posts do usuário no perfil
+    function loadProfilePosts(){
+      const userId = auth.currentUser.uid;
+      firestore.collection('posts').where('author','==',userId).orderBy('createdAt','desc').onSnapshot(snapshot => {
+        profilePosts.innerHTML = "";
+        snapshot.forEach(doc => {
+          const post = doc.data();
+          const postDiv = document.createElement('div');
+          postDiv.classList.add('post');
+          const postText = document.createElement('p');
+          postText.textContent = post.text;
+          postDiv.appendChild(postText);
+          profilePosts.appendChild(postDiv);
+        });
+      });
+    }
+
+    // Carrega dados do perfil (descrição, seguidores e verificação)
+    function loadProfileData(){
+      const uid = auth.currentUser.uid;
+      firestore.collection('users').doc(uid).onSnapshot(doc => {
+        const data = doc.data();
+        if(data){
+          profileDescription.value = data.description || "";
+          followersCountElem.textContent = data.followers ? data.followers.length : 0;
+          // Exibe ícone de verificação se o usuário estiver verificado
+          if(data.verified){
+            profilePageName.innerHTML = data.name + ' <i class="fas fa-check-circle verified"></i>';
+          } else {
+            profilePageName.textContent = data.name;
+          }
+        }
+      });
+    }
+
+    // Atualiza perfil (descrição)
+    updateProfileBtn.addEventListener('click', () => {
+      const uid = auth.currentUser.uid;
+      const desc = profileDescription.value;
+      firestore.collection('users').doc(uid).update({ description: desc })
+        .then(() => { alert("Perfil atualizado!"); })
+        .catch(err => { alert("Erro ao atualizar: " + err.message); });
+    });
+
+    // Função de seguir (exemplo simples; em produção, deve ser aplicada a perfis visitados)
+    followBtn.addEventListener('click', () => {
+      const uid = auth.currentUser.uid;
+      firestore.collection('users').doc(uid).update({
+        followers: firebase.firestore.FieldValue.arrayUnion(uid)
+      }).then(() => {
+        alert("Você seguiu este perfil!");
+      }).catch(err => { alert("Erro ao seguir: " + err.message); });
+    });
+
+    // Carrega seguidores (para atualizar contagem)
+    function loadFollowers(uid){
+      firestore.collection('users').doc(uid).onSnapshot(doc => {
+        const data = doc.data();
+        if(data){
+          followersCountElem.textContent = data.followers ? data.followers.length : 0;
+        }
+      });
+    }
+
+    // Verificação: Solicitar verificação (envia documento e WhatsApp)
+    verificationForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const whatsappNumber = whatsappNumberInput.value;
+      const file = documentUploadInput.files[0];
+      if(!file){
+        verificationError.textContent = "Por favor, envie um documento.";
+        return;
+      }
+      const storageRef = storage.ref('verificationDocuments/' + auth.currentUser.uid + '/' + file.name);
+      const uploadTask = storageRef.put(file);
+      uploadTask.on('state_changed', snapshot => {
+        // Aqui você pode atualizar um progress bar se desejar
+      }, error => {
+        verificationError.textContent = error.message;
+      }, () => {
+        uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
+          firestore.collection('verificationRequests').doc(auth.currentUser.uid).set({
+            userId: auth.currentUser.uid,
+            whatsapp: whatsappNumber,
+            documentURL: downloadURL,
+            status: "pending", // Pendente de aprovação
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          }).then(() => {
+            verificationSuccess.textContent = "Solicitação enviada. Aguarde a aprovação.";
+            verificationForm.reset();
+          }).catch(err => { verificationError.textContent = err.message; });
+        });
+      });
+    });
+
+    // Denunciar conta falsa: desativa a conta e notifica o usuário
+    reportAccountBtn.addEventListener('click', () => {
+      const uid = auth.currentUser.uid;
+      firestore.collection('users').doc(uid).update({ deactivated: true })
+        .then(() => {
+          alert("Conta denunciada e desativada. Verifique seu e-mail para recuperação.");
+          auth.signOut();
+        }).catch(err => { alert("Erro ao denunciar conta: " + err.message); });
+    });
+  </script>
+</body>
+</html>
